@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TowerOfHanoi from './components/TowerOfHanoi.vue'
+import TowerOfHanoi from './components/TowerOfHanoi.vue';
 </script>
 
 <template>
@@ -8,4 +8,3 @@ import TowerOfHanoi from './components/TowerOfHanoi.vue'
     <TowerOfHanoi />
   </div>
 </template>
-

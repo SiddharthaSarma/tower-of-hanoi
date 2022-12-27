@@ -1,6 +1,6 @@
 <template>
   <div class="horizontal-base">
-    <div class="base" v-for="rod in rods" @drop="onDrop($event, rod)" @dragenter.prevent @dragover.prevent>
+    <div class="base" v-for="rod in rods" :key="rod" @drop="onDrop($event, rod)" @dragenter.prevent @dragover.prevent>
       <div class="discs">
         <div
           class="disc"

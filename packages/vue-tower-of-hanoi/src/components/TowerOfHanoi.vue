@@ -6,8 +6,8 @@
           class="disc"
           v-for="i in 4"
           :style="{
-            width: 40 * i + 'px',
-            backgroundColor: '#' + randomColor(),
+            width: 45 * i + 'px',
+            backgroundColor: discColors[i],
           }"
         >
           {{ i }}
@@ -18,8 +18,8 @@
     <div class="base">3</div>
   </div>
 </template>
-<script setup>
-import { randomColor } from "./utils";
+<script setup lang="ts">
+import { discColors } from "./utils";
 </script>
 <style scoped>
 .horizontal-base {
@@ -34,11 +34,12 @@ import { randomColor } from "./utils";
   border: 2px solid #ccc;
   padding: 0.5rem;
   border-bottom: none;
+  background: linear-gradient(to right, #d7b889, #b27315, #966f33);
 }
 .discs {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: -10px;
   display: flex;
   flex-direction: column;
   align-items: center;

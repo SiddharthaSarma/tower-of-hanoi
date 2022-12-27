@@ -16,12 +16,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="base"
-      @drop="onDrop($event, 2)"
-      @dragenter.prevent
-      @dragover.prevent
-    >
+    <div class="base" @drop="onDrop($event, 2)" @dragenter.prevent @dragover.prevent>
       <div class="discs">
         <div
           class="disc"
@@ -56,8 +51,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { discColors } from "./utils";
-import { ref } from "vue";
+import { discColors } from './utils';
+import { ref } from 'vue';
 interface Disc {
   id: number;
   value: number;
@@ -75,13 +70,13 @@ const getDiscs = (listIndex: number) => {
 };
 const onDragStart = (event: DragEvent, index: number) => {
   if (event.dataTransfer) {
-    event.dataTransfer.dropEffect = "move";
-    event.dataTransfer.effectAllowed = "move";
-    event.dataTransfer.setData("itemId", index.toString());
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('itemId', index.toString());
   }
 };
 const onDrop = (event: DragEvent, index: number) => {
-  const itemId = event.dataTransfer?.getData("itemId");
+  const itemId = event.dataTransfer?.getData('itemId');
   const disc = discs.value.find((disc) => disc.value.toString() === itemId);
   if (disc) {
     disc.list = index;

@@ -1,43 +1,11 @@
 <template>
   <div class="horizontal-base">
-    <div class="base">
-      <div class="discs" @drop="onDrop($event, 1)">
-        <div
-          class="disc"
-          draggable="true"
-          v-for="i in getDiscs(1)"
-          :style="{
-            width: 45 * i.value + 'px',
-            backgroundColor: discColors[i.value],
-          }"
-          @dragstart="onDragStart($event, i.id)"
-        >
-          {{ i.value }}
-        </div>
-      </div>
-    </div>
-    <div class="base" @drop="onDrop($event, 2)" @dragenter.prevent @dragover.prevent>
+    <div class="base" v-for="rod in rods" @drop="onDrop($event, rod)" @dragenter.prevent @dragover.prevent>
       <div class="discs">
         <div
           class="disc"
           draggable="true"
-          v-for="i in getDiscs(2)"
-          :style="{
-            width: 45 * i.value + 'px',
-            backgroundColor: discColors[i.value],
-          }"
-          @dragstart="onDragStart($event, i.id)"
-        >
-          {{ i.value }}
-        </div>
-      </div>
-    </div>
-    <div class="base" @drop="onDrop($event, 3)">
-      <div class="discs">
-        <div
-          class="disc"
-          draggable="true"
-          v-for="i in getDiscs(3)"
+          v-for="i in getDiscs(rod)"
           :style="{
             width: 45 * i.value + 'px',
             backgroundColor: discColors[i.value],
@@ -58,6 +26,7 @@ interface Disc {
   value: number;
   list: number;
 }
+const rods = ref<number>(3);
 const discs = ref<Disc[]>([
   { id: 1, value: 1, list: 1 },
   { id: 2, value: 2, list: 1 },

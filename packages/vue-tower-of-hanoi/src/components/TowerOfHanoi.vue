@@ -69,7 +69,7 @@ const onDrop = (event: DragEvent, index: number) => {
 .base {
   height: 200px;
   border: 2px solid #ccc;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border-bottom: none;
   position: relative;
   background: linear-gradient(to right, #d7b889, #b27315, #966f33);
@@ -77,10 +77,11 @@ const onDrop = (event: DragEvent, index: number) => {
 .discs {
   position: absolute;
   bottom: 0;
-  left: -85px;
+  left: -1px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 .disc {
   border: 2px solid #ccc;

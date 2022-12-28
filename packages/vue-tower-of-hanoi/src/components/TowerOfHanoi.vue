@@ -55,7 +55,6 @@ const onDragStart = (event: DragEvent, index: number, fromRod: number) => {
 const onDrop = (event: DragEvent, index: number) => {
   const itemId = event.dataTransfer?.getData('itemId');
   const fromRod = Number(event.dataTransfer?.getData('rodId'));
-  console.log(itemId, fromRod, index);
   const disc = discs.value[fromRod - 1].find(
     (disc) => disc.value === Number(itemId)
   );

@@ -4,7 +4,7 @@ import TowerOfHanoi from './components/TowerOfHanoi.vue';
 
 <template>
   <div>
-    <h1>Tower of hanoi</h1>
+    <h1>Tower of Hanoi</h1>
     <TowerOfHanoi />
   </div>
 </template>

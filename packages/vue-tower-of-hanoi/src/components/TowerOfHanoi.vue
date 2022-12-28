@@ -11,13 +11,13 @@
       <div class="discs">
         <div
           class="disc"
-          draggable="true"
-          v-for="i in getDiscs(rod)"
+          v-for="(i, index) in getDiscs(rod - 1)"
+          :draggable="index == 0 ? true : false"
           :style="{
             width: 45 * i.value + 'px',
             backgroundColor: discColors[i.value],
           }"
-          @dragstart="onDragStart($event, i.id)"
+          @dragstart="onDragStart($event, i.id, rod)"
         >
           {{ i.value }}
         </div>
@@ -31,31 +31,58 @@ import { ref } from 'vue';
 interface Disc {
   id: number;
   value: number;
-  list: number;
 }
 const rods = ref<number>(3);
-const discs = ref<Disc[]>([
-  { id: 1, value: 1, list: 1 },
-  { id: 2, value: 2, list: 1 },
-  { id: 3, value: 3, list: 1 },
-  { id: 4, value: 4, list: 1 },
-]);
+const initialDisc = [
+  { id: 1, value: 1 },
+  { id: 2, value: 2 },
+  { id: 3, value: 3 },
+  // { id: 4, value: 4, }
+];
+const discs = ref<Array<Disc[]>>([[...initialDisc], [], []]);
 
-const getDiscs = (listIndex: number) => {
-  return discs.value.filter((disc) => disc.list === listIndex);
+const getDiscs = (listIndex: number): Disc[] => {
+  return discs.value[listIndex];
 };
-const onDragStart = (event: DragEvent, index: number) => {
+const onDragStart = (event: DragEvent, index: number, fromRod: number) => {
   if (event.dataTransfer) {
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('itemId', index.toString());
+    event.dataTransfer.setData('rodId', fromRod.toString());
   }
 };
 const onDrop = (event: DragEvent, index: number) => {
   const itemId = event.dataTransfer?.getData('itemId');
-  const disc = discs.value.find((disc) => disc.value.toString() === itemId);
-  if (disc) {
-    disc.list = index;
+  const fromRod = Number(event.dataTransfer?.getData('rodId'));
+  console.log(itemId, fromRod, index);
+  const disc = discs.value[fromRod - 1].find(
+    (disc) => disc.value === Number(itemId)
+  );
+  if (
+    disc &&
+    (!discs.value[index - 1].length ||
+      disc.value < discs.value[index - 1][0].value)
+  ) {
+    discs.value[fromRod - 1] = discs.value[fromRod - 1].filter(
+      (disc) => disc.value !== Number(itemId)
+    );
+    discs.value[index - 1].unshift(disc);
+  }
+  setTimeout(checkWin, 500);
+};
+
+const resetGame = () => {
+  discs.value = [[...initialDisc], [], []];
+}
+
+const checkWin = () => {
+  const isWin = discs.value
+    .slice(1)
+    .some((list) => list.map((disc) => disc.value).join('') === '123');
+  if (isWin) {
+    window.alert('Congratulations!!, You won :)');
+    resetGame();
   }
 };
 </script>

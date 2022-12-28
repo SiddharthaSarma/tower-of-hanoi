@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import TowerOfHanoi from './components/TowerOfHanoi.vue';
+import {coreName} from 'core';
+console.log(coreName);
 </script>
 
 <template>

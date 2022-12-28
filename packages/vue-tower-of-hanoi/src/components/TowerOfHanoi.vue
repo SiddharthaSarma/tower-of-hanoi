@@ -78,7 +78,7 @@ const resetGame = () => {
 const checkWin = () => {
   const isWin = discs.value
     .slice(1)
-    .some((list) => list.map((disc) => disc.value).join('') === '123');
+    .some((list) => list.map((disc) => disc.value).join('') === initialDisc.map(disc => disc.value).join(''));
   if (isWin) {
     window.alert('Congratulations!!, You won :)');
     resetGame();

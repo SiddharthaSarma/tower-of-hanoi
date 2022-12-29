@@ -11,7 +11,12 @@ export const getInitialDisc = (count: number) => {
   return result;
 };
 
-export const updateDiscPosition = (discs: Disc[][], from: number, to: number, discNo: number) => {
+export const updateDiscPosition = (
+  discs: Disc[][],
+  from: number,
+  to: number,
+  discNo: number
+) => {
   const localDiscs = [...discs];
   const discIndex = localDiscs[from - 1].findIndex(
     (disc) => disc.value === discNo
@@ -22,8 +27,7 @@ export const updateDiscPosition = (discs: Disc[][], from: number, to: number, di
   const disc = localDiscs[from - 1][discIndex];
   if (
     disc &&
-    (!localDiscs[to - 1].length ||
-      disc.value < localDiscs[to - 1][0].value)
+    (!localDiscs[to - 1].length || disc.value < localDiscs[to - 1][0].value)
   ) {
     localDiscs[from - 1] = localDiscs[from - 1].filter(
       (disc) => disc.value !== Number(discNo)
@@ -32,4 +36,4 @@ export const updateDiscPosition = (discs: Disc[][], from: number, to: number, di
   }
 
   return localDiscs;
-}
+};

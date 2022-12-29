@@ -13,9 +13,13 @@ export const getInitialDisc = (count: number) => {
 
 export const updateDiscPosition = (discs: Disc[][], from: number, to: number, discNo: number) => {
   const localDiscs = [...discs];
-  const disc = localDiscs[from - 1].find(
+  const discIndex = localDiscs[from - 1].findIndex(
     (disc) => disc.value === discNo
   );
+  if (discIndex > 0) {
+    return localDiscs;
+  }
+  const disc = localDiscs[from - 1][discIndex];
   if (
     disc &&
     (!localDiscs[to - 1].length ||

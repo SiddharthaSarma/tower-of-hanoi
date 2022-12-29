@@ -28,18 +28,22 @@
 <script setup lang="ts">
 import { discColors } from './utils';
 import { ref } from 'vue';
-import { initialDisc } from 'core';
-interface Disc {
-  id: number;
-  value: number;
-}
+import { getInitialDisc, updateDiscPosition } from 'core';
+import type { Disc } from 'core';
+
+// constants
+const NUMBER_OF_DISCS = 3;
+const INITIAL_DISC_POSITION = getInitialDisc(NUMBER_OF_DISCS);
+
+// refs
 const rods = ref<number>(3);
+const discs = ref<Array<Disc[]>>([[...INITIAL_DISC_POSITION], [], []]);
 
-const discs = ref<Array<Disc[]>>([[...initialDisc], [], []]);
-
+// methods
 const getDiscs = (listIndex: number): Disc[] => {
   return discs.value[listIndex];
 };
+
 const onDragStart = (event: DragEvent, index: number, fromRod: number) => {
   if (event.dataTransfer) {
     event.dataTransfer.dropEffect = 'move';
@@ -48,33 +52,26 @@ const onDragStart = (event: DragEvent, index: number, fromRod: number) => {
     event.dataTransfer.setData('rodId', fromRod.toString());
   }
 };
+
 const onDrop = (event: DragEvent, index: number) => {
-  const itemId = event.dataTransfer?.getData('itemId');
+  const itemId = Number(event.dataTransfer?.getData('itemId'));
   const fromRod = Number(event.dataTransfer?.getData('rodId'));
-  const disc = discs.value[fromRod - 1].find(
-    (disc) => disc.value === Number(itemId)
-  );
-  if (
-    disc &&
-    (!discs.value[index - 1].length ||
-      disc.value < discs.value[index - 1][0].value)
-  ) {
-    discs.value[fromRod - 1] = discs.value[fromRod - 1].filter(
-      (disc) => disc.value !== Number(itemId)
-    );
-    discs.value[index - 1].unshift(disc);
-  }
+  discs.value = updateDiscPosition(discs.value, fromRod, index, itemId);
   setTimeout(checkWin, 500);
 };
 
 const resetGame = () => {
-  discs.value = [[...initialDisc], [], []];
-}
+  discs.value = [[...INITIAL_DISC_POSITION], [], []];
+};
 
 const checkWin = () => {
   const isWin = discs.value
     .slice(1)
-    .some((list) => list.map((disc) => disc.value).join('') === initialDisc.map(disc => disc.value).join(''));
+    .some(
+      (list) =>
+        list.map((disc) => disc.value).join('') ===
+        INITIAL_DISC_POSITION.map((disc) => disc.value).join('')
+    );
   if (isWin) {
     window.alert('Congratulations!!, You won :)');
     resetGame();

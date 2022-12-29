@@ -28,17 +28,13 @@
 <script setup lang="ts">
 import { discColors } from './utils';
 import { ref } from 'vue';
+import { initialDisc } from 'core';
 interface Disc {
   id: number;
   value: number;
 }
 const rods = ref<number>(3);
-const initialDisc = [
-  { id: 1, value: 1 },
-  { id: 2, value: 2 },
-  { id: 3, value: 3 },
-  // { id: 4, value: 4, }
-];
+
 const discs = ref<Array<Disc[]>>([[...initialDisc], [], []]);
 
 const getDiscs = (listIndex: number): Disc[] => {
